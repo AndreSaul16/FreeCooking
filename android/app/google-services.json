@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "143794232114",
+    "project_id": "freecooking-dede4",
+    "storage_bucket": "freecooking-dede4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:143794232114:android:11f2c67136d1e612cf152b",
+        "android_client_info": {
+          "package_name": "com.sauldev.freecooking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "143794232114-s5nuhsn9jjf4q21bogonmt8hm3m5co5f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAG0rxqS1S1Z19td8RFZBSD3XNel37SzCs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "143794232114-s5nuhsn9jjf4q21bogonmt8hm3m5co5f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

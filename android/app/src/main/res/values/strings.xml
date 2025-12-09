@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">FreeCooking</string>
+    <string name="title_activity_main">FreeCooking</string>
+    <string name="package_name">com.freecooking.app</string>
+    <string name="custom_url_scheme">com.freecooking.app</string>
+</resources>

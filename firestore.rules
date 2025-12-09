@@ -1,0 +1,19 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 1. LOGS: Solo tú puedes leerlos, nadie puede borrarlos
+    match /system_logs/{logId} {
+      allow create: if true;
+      allow read: if request.auth != null && request.auth.token.email == 'andresaul16s@gmail.com';
+      allow update, delete: if false;
+    }
+
+    // 2. USUARIOS: Cada usuario solo puede tocar SUS propios datos
+    // (Esto protege tus recetas e ingredientes de otros usuarios)
+    match /users/{userId}/{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+  }
+}

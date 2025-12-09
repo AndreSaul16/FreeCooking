@@ -1,0 +1,14 @@
+{
+	"geolocation": {
+		"data": {
+			"country": {
+				"code": "ES",
+				"name": "Spain"
+			},
+			"timezone": "Europe/Madrid",
+			"latitude": 40.4172,
+			"longitude": -3.684
+		},
+		"timestamp": 1764958294297
+	}
+}

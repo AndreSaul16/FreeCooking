@@ -1,0 +1,151 @@
+Authenticate with WebAuthn
+Made by Gavin Sawyer
+2FA passkeys are here in ^10.3.0!
+This update brings support for linking secondary discoverable credentials using an alternate attachment (which defaults to "cross-platform").
+By specifying a factor parameter to existing browser library methods, you can enable users to gain access by inserting and activating or waving a security key over the device.
+See the full docs for examples and a feature complete demo.
+Use this extension and the browser library to create and sign in users with passkeys, link and unlink existing users to passkeys, and prompt signed-in users with a biometric verification request:
+
+Methods
+createUserWithPasskey: (auth: Auth, functions: Functions, name: string) => Promise<UserCredential>;
+    signInWithPasskey: (auth: Auth, functions: Functions)     => Promise<UserCredential>;
+      linkWithPasskey: (auth: Auth, functions: Functions, name: string) => Promise<UserCredential>;
+        unlinkPasskey: (auth: Auth, functions: Functions)               => Promise<void>;
+verifyUserWithPasskey: (auth: Auth, functions: Functions)               => Promise<void>;
+Designed to be used like the Firebase JavaScript SDK:
+
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithPasskey }          from "@firebase-web-authn/browser";
+class SignUpComponent {
+
+  constructor(
+    private readonly auth: Auth,
+    private readonly functions: Functions,
+  ) {
+    // Firebase JavaScript SDK usage
+    this
+      .createUserWithEmailAndPassword = (email: string, password: string) => createUserWithEmailAndPassword(auth, email, password)
+      .then(() => void(0));
+
+    // FirebaseWebAuthn usage
+    this
+      .createUserWithPasskey = (name: string) => createUserWithPasskey(auth, functions, name)
+      .then(() => void(0));
+
+  }
+
+  public readonly createUserWithEmailAndPassword: (email: string, password: string) => Promise<void>;
+  public readonly createUserWithPasskey: (name: string) => Promise<void>;
+
+}
+Use the server library to confirm important actions happening server-side:
+
+Methods
+  backupEligible: (uid: string, app?: App) => Promise<boolean | null>;
+backupSuccessful: (uid: string, app?: App) => Promise<boolean | null>;
+     credentials: (uid: string, app?: App) => Promise<{ [key in "primary" | "backup"]: WebAuthnUserCredential | null }>;
+     lastPresent: (uid: string, app?: App) => Promise<Timestamp | null>;
+    lastVerified: (uid: string, app?: App) => Promise<Timestamp | null>;
+Designed to be used within Firebase Functions or another secure context with access to Firestore to check users’ status with FirebaseWebAuthn:
+
+import { getApps, initializeApp } from "firebase-admin/app";
+import { lastVerified }           from "@firebase-web-authn/server";
+getApps().length === 0 && initializeApp();
+
+// If the user was verified within the past 30 seconds, proceed. Otherwise, ask for reverification:
+(await lastVerified(user.uid))?.seconds > (Date.now() / 1000) - 30 ?
+  proceed() :
+  askForReverification();
+Prerequisites
+Before installing this extension, you’ll need to set up these services in your project. This must be done both in the Firebase Console and initialized in the application:
+
+App Check with reCAPTCHA Enterprise or v3
+Authentication with the anonymous provider
+Firestore
+Functions
+Additional Setup
+Create a Firestore Database to store public key credentials with the ID ext-firebase-web-authn and location matching the function deployment. It is recommended to choose either nam5 in North America or eur3 in Europe and to enable delete protection:
+
+% firebase firestore:databases:create ext-firebase-web-authn --location ${MULTI_REGION_NAME} --delete-protection ENABLED
+As of July 2024, supported roles for Firebase Extensions do not include iam.serviceAccounts.signBlob or serviceusage.services.use which are needed for custom auth providers.
+
+After deploying the extension, grant the Service Account Token Creator and Service Usage Consumer roles to the extension’s service account in IAM under Firebase Extensions firebase-web-authn service account > Edit > Assign roles.
+If the service account isn’t appearing, click Grant Access and enter its address as ext-firebase-web-authn@${PROJECT_ID}.iam.gserviceaccount.com
+The browser must reach FirebaseWebAuthn from the same domain as your website. Modify your firebase.json to include a rewrite on each app where you’d like to use passkeys:
+
+{
+  "hosting": [
+    {
+      "target": "...",
+      "rewrites": [
+        {
+          "source": "/firebase-web-authn-api",
+          "function": "ext-firebase-web-authn-api"
+        }
+      ]
+    }
+  ]
+}
+Billing
+To install an extension, your project must be on the Blaze (pay as you go) plan. This extension uses other Firebase and Google Cloud Platform services, which have associated charges if you exceed the service’s no-cost tier:
+
+Firestore Database
+Functions (Node.js 18 runtime)
+
+
+What you can configure
+Relying Party Name
+What relying party name would you like to use? This appears in the passkey window in some browsers in place of your domain name.
+
+Relying Party ID
+What (optional) relying party ID would you like to use? Default behavior uses the hostname of origin, i.e. “login.example.com” when the origin is “https://login.example.com:3000.” This is for use (1.) in mobile apps without a domain–provide any domain you control in order to avoid phishing from fraudulent web-based logins–or (2.) to increase passkeys’ scope when hosting the app on a subdomain–provide the highest level of domain you control.
+
+Cloud Functions Location
+Where do you want to deploy the functions created for this extension? You usually want a location close to your database. For help selecting a location, refer to the location selection guide.
+
+Authenticator Attachment
+What (optional) authenticator attachment for primary passkeys would you like to use? “Cross-platform” only allows physical security keys. “Platform” only allows passkey managers. Default behavior is “Any” which allows either.
+
+Authenticator Attachment for Secondary Passkeys (2FA)
+What (optional) authenticator attachment for secondary passkeys would you like to use? Default behavior is “Cross-platform” which only allows physical security keys to be used for 2FA. This should differ from the previous setting as it is intended to be a fail-safe.
+
+User Verification Requirement
+What (optional) user verification requirement would you like to use? Default behavior is “Preferred” which requests user verification when possible. “Required” requests user verification and fails if it is not provided, but does not apply with Authenticator Attachment set to “Cross-platform” since user verification isn’t possible with physical security keys. If Authenticator Attachment for Secondary Passkeys (2FA) is set to “Cross-platform,” “Required” will not apply to secondary passkeys. “Discouraged” requests skipping user verification to speed up the interaction. See User Presence vs. User Verification.ç
+ Cloud functions
+api
+Registers and authenticates WebAuthn passkeys, manages public key credentials in Firestore, and cleans up data if the user cancels a process or unlinks a passkey.
+Using the Firebase console
+To install and manage extensions, you can use the Firebase console
+.
+
+Using the Firebase CLI
+To install and manage extensions, you can also use the Firebase CLI:
+
+Step 1: Run the following npm command to install the CLI or update to the latest CLI version.
+npm install -g firebase-tools
+Doesn't work? Take a look at the Firebase CLI reference or change your npm permissions.
+
+Step 2: Set up a new Firebase project directory or navigate to an existing one
+Step 3: Add this extension to your extension manifest by running
+firebase ext:install gavinsawyer/firebase-web-authn --project=projectId_or_alias
+Step 4 (Optional): Test this extension locally with the Emulator Suite
+firebase emulators:start
+Step 5: Deploy the extension instances in your manifest to your project
+firebase deploy --only extensions --project=projectId_or_alias
+Using an autogenerated SDK
+To install and manage extensions, you can also use an autogenerated SDK:
+
+Step 1: Run the following npm command to install the CLI or update to the latest CLI version.
+npm install -g firebase-tools
+Doesn't work? Take a look at the Firebase CLI reference or change your npm permissions.
+
+Step 2: Set up a new Firebase project directory or navigate to an existing one
+Step 3: Generate an SDK for this extension by running
+firebase ext:sdk:install gavinsawyer/firebase-web-authn --project=projectId_or_alias
+Step 4: Configure one or more extension instances in your functions codebase.
+Step 5: Deploy the extension instances in your codebase to your project
+firebase deploy --only functions --project=projectId_or_alias
+Note from Firebase
+Making requests to third-party APIs may incur costs from the third-party service.
+
+You will be charged a small amount (typically around $0.01/month) for the Firebase resources required by this extension (even if it is not used), in addition to any charges associated with its usage. However, you'll only be charged for usage that exceeds Firebase's no-cost tier for those services. Learn more details in the Firebase pricing page.
