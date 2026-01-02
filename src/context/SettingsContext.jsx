@@ -7,6 +7,7 @@ const DEFAULT_SETTINGS = {
     targetMarginPercent: 70,
     taxPercent: 10,
     pricesIncludeTax: false,
+    psychologicalPricing: false, // Desactivado por defecto para precios exactos
 
     // Labor
     laborCostPerHour: 12,

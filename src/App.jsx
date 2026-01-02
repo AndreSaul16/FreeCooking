@@ -11,6 +11,7 @@ import useRecipeStore from './store/recipeStore';
 import Chatbot from './components/Chatbot';
 import { initializeTheme } from './services/themeService';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useSmoothScroll } from './hooks/useSmoothScroll';
 
 import { SettingsProvider } from './context/SettingsContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
@@ -22,6 +23,9 @@ function AuthenticatedApp() {
     const [editingRecipe, setEditingRecipe] = useState(null);
     const { recipes, initialize, cleanup, loading, error } = useRecipeStore();
     const { currentUser, logout } = useAuth();
+
+    // Smooth scroll premium
+    useSmoothScroll();
 
     useEffect(() => {
         initializeTheme();
@@ -103,12 +107,15 @@ function AuthenticatedApp() {
 
     return (
         <SettingsProvider>
-            <div className="min-h-screen bg-gray-900 text-gray-100 font-sans selection:bg-primary-500/30">
-                {/* Header con Safe Area */}
-                <header className="bg-gray-800 border-b border-gray-700 sticky top-0 z-40 backdrop-blur-md bg-opacity-80"
-                    style={{ paddingTop: 'env(safe-area-inset-top)' }}>
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex items-center justify-between h-16">
+            {/* Background transparente para ver gradient global */}
+            <div className="min-h-screen text-gray-100 font-sans selection:bg-primary-500/30">
+                {/* Header Glass Premium con Safe Area */}
+                <header
+                    className="bg-white/10 backdrop-blur-xl border-b border-white/20 shadow-lg sticky top-0 z-40 rounded-b-3xl mx-2 mt-2"
+                    style={{ paddingTop: 'max(0.5rem, env(safe-area-inset-top))' }}
+                >
+                    <div className="max-w-7xl mx-auto px-4 py-3">
+                        <div className="flex items-center justify-between min-h-[56px]">
                             <div className="flex items-center gap-3">
                                 <div className="bg-gradient-to-br from-primary-500 to-primary-600 p-2 rounded-lg shadow-lg shadow-primary-500/20">
                                     <ChefHat className="h-6 w-6 text-white" />
@@ -128,15 +135,15 @@ function AuthenticatedApp() {
                                         key={item.id}
                                         onClick={() => handleViewChange(item.id)}
                                         className={`px-4 py-2 rounded-lg text-sm font-medium transition-all relative group ${currentView === item.id
-                                            ? 'text-primary-400 bg-primary-500/10'
-                                            : 'text-gray-400 hover:text-gray-200 hover:bg-gray-700/50'
+                                            ? 'text-primary-400 bg-primary-500/15'
+                                            : 'text-white/60 hover:text-white hover:bg-white/5'
                                             }`}
                                     >
                                         <div className="flex items-center gap-2">
-                                            <item.icon className={`h-4 w-4 ${currentView === item.id ? 'text-primary-500' : ''}`} />
+                                            <item.icon className={`h-4 w-4 ${currentView === item.id ? 'text-primary-400' : ''}`} />
                                             {item.label}
                                             {item.count !== undefined && (
-                                                <span className="bg-gray-700 text-gray-300 text-xs px-1.5 py-0.5 rounded-full">
+                                                <span className="bg-white/10 text-white text-xs px-1.5 py-0.5 rounded-full">
                                                     {item.count}
                                                 </span>
                                             )}
@@ -144,17 +151,17 @@ function AuthenticatedApp() {
                                         {currentView === item.id && (
                                             <motion.div
                                                 layoutId="activeTab"
-                                                className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-500 mx-2 rounded-t-full"
+                                                className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-400 mx-2 rounded-t-full"
                                                 initial={false}
                                                 transition={{ type: "spring", stiffness: 500, damping: 30 }}
                                             />
                                         )}
                                     </button>
                                 ))}
-                                <div className="h-6 w-px bg-gray-700 mx-2"></div>
+                                <div className="h-6 w-px bg-white/10 mx-2"></div>
                                 <button
                                     onClick={handleLogout}
-                                    className="p-2 text-gray-400 hover:text-red-400 hover:bg-gray-700/50 rounded-lg transition-colors"
+                                    className="p-2 text-white/60 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
                                     title="Cerrar Sesión"
                                 >
                                     <LogOut className="h-5 w-5" />
@@ -164,7 +171,7 @@ function AuthenticatedApp() {
                             {/* Mobile Menu Button */}
                             <button
                                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                                className="md:hidden p-2 rounded-lg text-gray-400 hover:bg-gray-700 active:bg-gray-600 transition-colors"
+                                className="md:hidden p-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg text-white/60 hover:bg-white/10 hover:border-white/20 active:bg-white/15 transition-all flex items-center justify-center"
                             >
                                 <Menu className="h-6 w-6" />
                             </button>
@@ -178,7 +185,7 @@ function AuthenticatedApp() {
                                 initial={{ opacity: 0, height: 0 }}
                                 animate={{ opacity: 1, height: 'auto' }}
                                 exit={{ opacity: 0, height: 0 }}
-                                className="md:hidden border-t border-gray-700 bg-gray-800 overflow-hidden"
+                                className="md:hidden border-t border-white/10 bg-white/5 backdrop-blur-lg overflow-hidden"
                             >
                                 <div className="px-4 py-2 space-y-1">
                                     {navItems.map((item) => (
@@ -186,8 +193,8 @@ function AuthenticatedApp() {
                                             key={item.id}
                                             onClick={() => handleViewChange(item.id)}
                                             className={`w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-colors ${currentView === item.id
-                                                ? 'bg-primary-500/10 text-primary-400'
-                                                : 'text-gray-400 hover:bg-gray-700 hover:text-white'
+                                                ? 'bg-primary-500/15 text-primary-400'
+                                                : 'text-white/60 hover:bg-white/10 hover:text-white'
                                                 }`}
                                         >
                                             <div className="flex items-center gap-3">
@@ -214,9 +221,9 @@ function AuthenticatedApp() {
                     </AnimatePresence>
                 </header>
 
-                {/* Main Content con Safe Area para Notch */}
-                <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-safe relative z-0"
-                    style={{ paddingTop: 'max(2rem, env(safe-area-inset-top))' }}>
+                {/* Main Content con Safe Area y espacio para scroll */}
+                <main className="max-w-7xl mx-auto px-4 py-6 pb-safe relative z-0"
+                    style={{ paddingBottom: 'max(2rem, env(safe-area-inset-bottom))' }}>
                     <AnimatePresence mode="wait">
                         {currentView === 'recipes' && (
                             <motion.div
@@ -239,7 +246,8 @@ function AuthenticatedApp() {
                                             setEditingRecipe(null);
                                             setIsFormOpen(true);
                                         }}
-                                        className="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors shadow-lg shadow-primary-600/20"
+                                        className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-semibold rounded-xl transition-all shadow-xl hover:shadow-2xl"
+                                        style={{ boxShadow: '0 4px 20px rgba(16, 185, 129, 0.4)' }}
                                     >
                                         <Plus className="h-5 w-5" />
                                         Nueva Receta
@@ -329,7 +337,7 @@ function AuthenticatedApp() {
                 </AnimatePresence>
                 <Chatbot />
             </div>
-        </SettingsProvider>
+        </SettingsProvider >
     );
 }
 

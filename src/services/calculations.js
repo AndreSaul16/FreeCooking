@@ -108,7 +108,7 @@ export function calculatePrimeCost(cogs, prepTimeMinutes, settings) {
 /**
  * Recomienda precio de venta basado en margen objetivo
  * @param {number} primeCost - Costo Primo (COGS + Labor) del batch completo
- * @param {object} settings - Configuración del negocio (targetMarginPercent, taxPercent, pricesIncludeTax)
+ * @param {object} settings - Configuración del negocio (targetMarginPercent, taxPercent, pricesIncludeTax, psychologicalPricing)
  * @param {number} servings - Número de raciones que produce la receta (default: 1)
  * @returns {object} - { suggestedPrice, markup, fcPercent }
  */
@@ -117,12 +117,14 @@ export function suggestPrice(primeCost, settings, servings = 1) {
     const targetMarginPercent = settings?.targetMarginPercent || 70;
     const taxPercent = settings?.taxPercent || 10;
     const pricesIncludeTax = settings?.pricesIncludeTax || false;
+    const psychologicalPricing = settings?.psychologicalPricing !== false; // Por defecto true
 
     // Calcular el costo primo por ración
     const primeCostPerServing = primeCost / servings;
 
     // Fórmula de Margen: Precio = Costo / (1 - %Margen)
     // Ejemplo: Costo 3€, Margen 70% -> 3 / 0.3 = 10€
+    // Esto es equivalente al multiplicador x3.33
 
     const marginDecimal = targetMarginPercent / 100;
 
@@ -136,6 +138,14 @@ export function suggestPrice(primeCost, settings, servings = 1) {
         suggestedPrice *= (1 + taxPercent / 100);
     }
 
+    // Aplicar redondeo psicológico solo si está activado
+    if (psychologicalPricing) {
+        suggestedPrice = roundToNearestPsychological(suggestedPrice);
+    } else {
+        // Redondeo simple a 2 decimales
+        suggestedPrice = Math.round(suggestedPrice * 100) / 100;
+    }
+
     // Markup = (Precio - Costo) / Costo
     // Ejemplo: Precio 10, Costo 3. Markup = 7/3 = 2.33 (233%)
     const markup = primeCostPerServing > 0 ? (suggestedPrice - primeCostPerServing) / primeCostPerServing : 0;
@@ -144,7 +154,7 @@ export function suggestPrice(primeCost, settings, servings = 1) {
     const fcPercent = suggestedPrice > 0 ? (primeCostPerServing / suggestedPrice) * 100 : 0;
 
     return {
-        suggestedPrice: roundToNearestPsychological(suggestedPrice),
+        suggestedPrice: suggestedPrice,
         markup: parseFloat(markup.toFixed(2)),
         fcPercent: parseFloat(fcPercent.toFixed(1))
     };
@@ -152,19 +162,31 @@ export function suggestPrice(primeCost, settings, servings = 1) {
 
 /**
  * Redondea a precios psicológicos (.50, .95 o enteros)
+ * Ahora más conservador para evitar redondear demasiado
  * @param {number} price - Precio a redondear
  * @returns {number} - Precio redondeado
  */
 function roundToNearestPsychological(price) {
+    // Solo redondear si el precio no es ya un número "bonito"
+    const cents = (price % 1).toFixed(2);
+    
     if (price < 5) {
-        // Precios bajos: .95
-        return Math.ceil(price - 0.05) + 0.95;
+        // Precios bajos: .95 o .50
+        if (Math.abs(price - Math.floor(price) - 0.95) < 0.05) return Math.floor(price) + 0.95;
+        if (Math.abs(price - Math.floor(price) - 0.50) < 0.05) return Math.floor(price) + 0.50;
+        // Si ya está cerca de un número redondo, dejarlo
+        if (price % 0.50 < 0.10) return Math.round(price * 2) / 2;
+        return price; // No redondear si no está cerca
     } else if (price < 15) {
-        // Precios medios: .50
-        return Math.round(price * 2) / 2;
+        // Precios medios: redondear solo a .00 o .50 si está muy cerca
+        const rounded = Math.round(price * 2) / 2;
+        // Solo redondear si la diferencia es menor a 0.25€
+        if (Math.abs(rounded - price) < 0.25) return rounded;
+        return Math.round(price * 100) / 100; // Redondear a 2 decimales
     } else {
-        // Precios altos: enteros (implica calidad)
-        return Math.round(price);
+        // Precios altos: enteros solo si está muy cerca
+        if (Math.abs(Math.round(price) - price) < 0.30) return Math.round(price);
+        return Math.round(price * 100) / 100; // Redondear a 2 decimales
     }
 }
 

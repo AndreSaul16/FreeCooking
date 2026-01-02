@@ -65,7 +65,7 @@ export default function UserProfile({ onClose }) {
     };
 
     return (
-        <div className="bg-gray-800 border border-gray-700 rounded-xl p-6">
+        <div className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg rounded-xl p-6">
             <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-2">
                     <User className="h-5 w-5 text-primary-500" />
@@ -74,7 +74,7 @@ export default function UserProfile({ onClose }) {
                 {onClose && (
                     <button
                         onClick={onClose}
-                        className="p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-colors"
+                        className="p-2 text-white/60 hover:text-white hover:bg-gray-700 rounded-lg transition-colors"
                     >
                         <X className="h-4 w-4" />
                     </button>
@@ -82,8 +82,8 @@ export default function UserProfile({ onClose }) {
             </div>
 
             {/* Avatar/Photo Section */}
-            <div className="flex items-center gap-6 mb-6 pb-6 border-b border-gray-700">
-                <div className="relative">
+            <div className="flex items-center gap-6 mb-6 pb-6 border-b border-white/20 shadow-lg">
+                <div className="relative z-0">
                     {formData.photoURL ? (
                         <img
                             src={formData.photoURL}
@@ -97,7 +97,7 @@ export default function UserProfile({ onClose }) {
                     )}
                     <button
                         type="button"
-                        className="absolute bottom-0 right-0 p-1.5 bg-gray-700 hover:bg-gray-600 rounded-full border-2 border-gray-800 transition-colors"
+                        className="absolute bottom-0 right-0 p-1.5 bg-white/10 backdrop-blur-sm hover:bg-white/20 rounded-full border-2 border-white/20 transition-all"
                         title="Cambiar foto"
                     >
                         <Camera className="h-4 w-4 text-white" />
@@ -105,7 +105,7 @@ export default function UserProfile({ onClose }) {
                 </div>
                 <div>
                     <p className="text-white font-medium">{formData.displayName || 'Sin nombre'}</p>
-                    <p className="text-sm text-gray-400">{formData.email}</p>
+                    <p className="text-sm text-white/60">{formData.email}</p>
                     <p className="text-xs text-gray-500 mt-1">Usuario desde {new Date(currentUser?.metadata?.creationTime).toLocaleDateString()}</p>
                 </div>
             </div>
@@ -199,7 +199,7 @@ export default function UserProfile({ onClose }) {
                 <button
                     type="submit"
                     disabled={loading}
-                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-primary-600 hover:bg-primary-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors shadow-lg shadow-primary-600/20"
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 btn-glass-primary hover:bg-primary-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors shadow-lg shadow-primary-600/20"
                 >
                     {loading ? (
                         <>
@@ -225,3 +225,4 @@ export default function UserProfile({ onClose }) {
         </div>
     );
 }
+

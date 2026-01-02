@@ -13,7 +13,7 @@ export default function RecipeForm({ recipeToEdit = null, onClose }) {
         name: '',
         category: 'principal',
         servings: 1,
-        prepTimeMinutes: 0,
+        prepTimeMinutes: 0, // Fijo en 0, no editable por el usuario
         laborCostPerHour: 12,
         ingredients: [],
         sellingPrice: '',  // Precio de venta real (vacío usa sugerido)
@@ -192,8 +192,8 @@ export default function RecipeForm({ recipeToEdit = null, onClose }) {
 
     return (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-2 sm:p-4 z-50 backdrop-blur-sm overflow-y-auto">
-            <div className="bg-gray-800 rounded-xl w-full max-w-4xl my-4 sm:my-8 shadow-2xl border border-gray-700 max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
-                <div className="sticky top-0 bg-gray-800 border-b border-gray-700 p-4 sm:p-6 flex justify-between items-center z-10">
+            <div className="bg-white/10 backdrop-blur-xl rounded-xl w-full max-w-4xl my-4 sm:my-8 shadow-2xl border border-white/20 shadow-lg max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
+                <div className="sticky top-0 bg-white/10 backdrop-blur-xl border-b border-white/20 shadow-lg p-4 sm:p-6 flex justify-between items-center z-10">
                     <h2 className="text-xl sm:text-2xl font-bold text-white">
                         {recipeToEdit ? 'Editar Receta' : 'Nueva Receta'}
                     </h2>
@@ -208,7 +208,7 @@ export default function RecipeForm({ recipeToEdit = null, onClose }) {
                         {/* Close Button */}
                         <button
                             onClick={onClose}
-                            className="text-gray-400 hover:text-white transition-colors"
+                            className="text-white/60 hover:text-white transition-colors"
                         >
                             <X className="h-6 w-6" />
                         </button>
@@ -219,14 +219,14 @@ export default function RecipeForm({ recipeToEdit = null, onClose }) {
                     {/* Información básica */}
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <label className="block text-sm font-medium text-gray-300">
+                            <label className="block text-sm font-medium text-white/80">
                                 Nombre de la Receta *
                             </label>
                             <input
                                 type="text"
                                 value={formData.name}
                                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                                className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-primary-400 focus:border-transparent transition-all"
                                 placeholder="Ej: Empanadas de Carne"
                                 autoFocus
                                 required
@@ -234,13 +234,13 @@ export default function RecipeForm({ recipeToEdit = null, onClose }) {
                         </div>
 
                         <div className="space-y-2">
-                            <label className="block text-sm font-medium text-gray-300">
+                            <label className="block text-sm font-medium text-white/80">
                                 Categoría
                             </label>
                             <select
                                 value={formData.category}
                                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                                className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-primary-500 transition-all"
+                                className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-primary-400 transition-all"
                             >
                                 <option value="entrante">Entrante</option>
                                 <option value="principal">Principal</option>
@@ -250,7 +250,7 @@ export default function RecipeForm({ recipeToEdit = null, onClose }) {
                         </div>
 
                         <div className="space-y-2">
-                            <label className="block text-sm font-medium text-gray-300">
+                            <label className="block text-sm font-medium text-white/80">
                                 Número de Raciones *
                             </label>
                             <input
@@ -262,33 +262,18 @@ export default function RecipeForm({ recipeToEdit = null, onClose }) {
                                     const value = e.target.value.replace(/[^0-9]/g, '');
                                     setFormData({ ...formData, servings: parseInt(value) || 1 });
                                 }}
-                                className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-primary-500 transition-all"
+                                className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-primary-400 transition-all"
                                 placeholder="1"
                                 required
                             />
                         </div>
 
-                        <div className="space-y-2">
-                            <label className="block text-sm font-medium text-gray-300">
-                                Tiempo Preparación (min)
-                            </label>
-                            <input
-                                type="text"
-                                inputMode="decimal"
-                                value={formData.prepTimeMinutes}
-                                onChange={(e) => {
-                                    const value = e.target.value.replace(/[^0-9.]/g, '');
-                                    setFormData({ ...formData, prepTimeMinutes: parseFloat(value) || 0 });
-                                }}
-                                className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-primary-500 transition-all"
-                                placeholder="30"
-                            />
-                        </div>
+                        {/* Tiempo de preparación removido - siempre 0 por defecto */}
                     </div>
 
                     {/* Sección de Ingredientes */}
                     <div className="space-y-4">
-                        <h3 className="text-lg font-semibold text-white border-b border-gray-700 pb-2">Ingredientes</h3>
+                        <h3 className="text-lg font-semibold text-white border-b border-white/20 shadow-lg pb-2">Ingredientes</h3>
 
                         {masterIngredients.length === 0 ? (
                             <div className="bg-yellow-900/20 border border-yellow-700/50 rounded-lg p-4 flex items-start gap-3">
@@ -301,14 +286,14 @@ export default function RecipeForm({ recipeToEdit = null, onClose }) {
                                 </div>
                             </div>
                         ) : (
-                            <div className="bg-gray-700/30 p-4 rounded-xl border border-gray-700 space-y-4">
+                            <div className="bg-gray-700/30 p-4 rounded-xl border border-white/20 shadow-lg space-y-4">
                                 <div className="grid md:grid-cols-12 gap-3">
                                     <div className="md:col-span-5">
-                                        <label className="block text-xs font-medium text-gray-400 mb-1.5">Ingrediente</label>
+                                        <label className="block text-xs font-medium text-white/60 mb-1.5">Ingrediente</label>
                                         <select
                                             value={selectedMasterId}
                                             onChange={(e) => setSelectedMasterId(e.target.value)}
-                                            className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:ring-2 focus:ring-primary-500"
+                                            className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:ring-2 focus:ring-primary-400"
                                         >
                                             <option value="">Seleccionar...</option>
                                             {filteredMasterIngredients.map((ing) => (
@@ -320,7 +305,7 @@ export default function RecipeForm({ recipeToEdit = null, onClose }) {
                                     </div>
 
                                     <div className="md:col-span-3">
-                                        <label className="block text-xs font-medium text-gray-400 mb-1.5">Cantidad</label>
+                                        <label className="block text-xs font-medium text-white/60 mb-1.5">Cantidad</label>
                                         <input
                                             type="text"
                                             inputMode="decimal"
@@ -329,17 +314,17 @@ export default function RecipeForm({ recipeToEdit = null, onClose }) {
                                                 const value = e.target.value.replace(/[^0-9.]/g, '');
                                                 setQuantity(value);
                                             }}
-                                            className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:ring-2 focus:ring-primary-500"
+                                            className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:ring-2 focus:ring-primary-400"
                                             placeholder="0"
                                         />
                                     </div>
 
                                     <div className="md:col-span-2">
-                                        <label className="block text-xs font-medium text-gray-400 mb-1.5">Unidad</label>
+                                        <label className="block text-xs font-medium text-white/60 mb-1.5">Unidad</label>
                                         <select
                                             value={unit}
                                             onChange={(e) => setUnit(e.target.value)}
-                                            className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:ring-2 focus:ring-primary-500"
+                                            className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:ring-2 focus:ring-primary-400"
                                         >
                                             <option value="g">g</option>
                                             <option value="kg">kg</option>
@@ -353,7 +338,7 @@ export default function RecipeForm({ recipeToEdit = null, onClose }) {
                                         <button
                                             type="button"
                                             onClick={handleAddIngredient}
-                                            className="w-full bg-primary-600 hover:bg-primary-700 text-white px-3 py-2 rounded-lg flex items-center justify-center gap-1.5 text-sm font-medium transition-colors"
+                                            className="w-full btn-glass-primary hover:bg-primary-700 text-white px-3 py-2 rounded-lg flex items-center justify-center gap-1.5 text-sm font-medium transition-colors"
                                         >
                                             <Plus className="h-4 w-4" />
                                             Añadir
@@ -367,16 +352,16 @@ export default function RecipeForm({ recipeToEdit = null, onClose }) {
                                         <table className="w-full text-sm">
                                             <thead>
                                                 <tr className="border-b border-gray-600">
-                                                    <th className="text-left py-2 text-xs font-medium text-gray-400">Ingrediente</th>
-                                                    <th className="text-left py-2 text-xs font-medium text-gray-400">Cantidad</th>
-                                                    <th className="text-right py-2 text-xs font-medium text-gray-400">€/Ud</th>
+                                                    <th className="text-left py-2 text-xs font-medium text-white/60">Ingrediente</th>
+                                                    <th className="text-left py-2 text-xs font-medium text-white/60">Cantidad</th>
+                                                    <th className="text-right py-2 text-xs font-medium text-white/60">€/Ud</th>
                                                     <th className="w-8"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {formData.ingredients.map((ing) => (
-                                                    <tr key={ing.id} className="border-b border-gray-700/50">
-                                                        <td className="py-3 text-gray-300">
+                                                    <tr key={ing.id} className="border-b border-white/20 shadow-lg/50">
+                                                        <td className="py-3 text-white/80">
                                                             {ing.name}
                                                             {ing.wastePercentage > 0 && (
                                                                 <span className="text-xs text-gray-500 ml-1">
@@ -384,10 +369,10 @@ export default function RecipeForm({ recipeToEdit = null, onClose }) {
                                                                 </span>
                                                             )}
                                                         </td>
-                                                        <td className="py-3 text-gray-300">
+                                                        <td className="py-3 text-white/80">
                                                             {ing.quantity} {ing.unit}
                                                         </td>
-                                                        <td className="py-3 text-right text-xs text-gray-400">
+                                                        <td className="py-3 text-right text-xs text-white/60">
                                                             {Number(ing.purchasePrice || 0).toFixed(2)} €/{ing.purchaseUnit || 'ud'}
                                                         </td>
                                                         <td className="py-3 text-right">
@@ -417,22 +402,22 @@ export default function RecipeForm({ recipeToEdit = null, onClose }) {
                             </h3>
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                                 <div className="space-y-1">
-                                    <p className="text-xs text-gray-400 uppercase tracking-wider">COGS (Por Ración)</p>
+                                    <p className="text-xs text-white/60 uppercase tracking-wider">COGS (Por Ración)</p>
                                     <p className="text-2xl font-bold text-white">{(cogs / formData.servings).toFixed(2)}€</p>
                                     <p className="text-xs text-gray-500">Batch: {cogs.toFixed(2)}€</p>
                                 </div>
                                 <div className="space-y-1">
-                                    <p className="text-xs text-gray-400 uppercase tracking-wider">Costo Primo (Por Ración)</p>
+                                    <p className="text-xs text-white/60 uppercase tracking-wider">Costo Primo (Por Ración)</p>
                                     <p className="text-2xl font-bold text-blue-400">{(primeCost / formData.servings).toFixed(2)}€</p>
                                     <p className="text-xs text-gray-500">Batch: {primeCost.toFixed(2)}€</p>
                                 </div>
                                 <div className="space-y-1">
-                                    <p className="text-xs text-gray-400 uppercase tracking-wider">P.V.P Sugerido</p>
+                                    <p className="text-xs text-white/60 uppercase tracking-wider">P.V.P Sugerido</p>
                                     <p className="text-2xl font-bold text-green-400">{pricing.suggestedPrice.toFixed(2)}€</p>
                                     <p className="text-xs text-gray-500">Por ración · Margen {settings.targetMarginPercent}%</p>
                                 </div>
                                 <div className="space-y-1">
-                                    <p className="text-xs text-gray-400 uppercase tracking-wider">Beneficio Neto</p>
+                                    <p className="text-xs text-white/60 uppercase tracking-wider">Beneficio Neto</p>
                                     <p className="text-2xl font-bold text-green-500">
                                         {(pricing.suggestedPrice - (primeCost / formData.servings)).toFixed(2)}€
                                     </p>
@@ -452,7 +437,7 @@ export default function RecipeForm({ recipeToEdit = null, onClose }) {
                             <div className="grid md:grid-cols-2 gap-6">
                                 {/* Precio de Venta Real */}
                                 <div className="space-y-2">
-                                    <label className="block text-sm font-medium text-gray-300">
+                                    <label className="block text-sm font-medium text-white/80">
                                         Precio de Venta Real (€)
                                     </label>
                                     <input
@@ -473,7 +458,7 @@ export default function RecipeForm({ recipeToEdit = null, onClose }) {
 
                                 {/* Ventas Mensuales Estimadas */}
                                 <div className="space-y-2">
-                                    <label className="block text-sm font-medium text-gray-300">
+                                    <label className="block text-sm font-medium text-white/80">
                                         Ventas Mensuales Estimadas (unidades)
                                     </label>
                                     <input
@@ -494,9 +479,9 @@ export default function RecipeForm({ recipeToEdit = null, onClose }) {
                                 </div>
 
                                 {/* Display de Margen Real */}
-                                <div className="md:col-span-2 bg-gray-900/50 border border-gray-700 rounded-lg p-4">
+                                <div className="md:col-span-2 bg-black/20/50 border border-white/20 shadow-lg rounded-lg p-4">
                                     <div className="flex items-center justify-between">
-                                        <span className="text-sm text-gray-400">Margen de Beneficio Real:</span>
+                                        <span className="text-sm text-white/60">Margen de Beneficio Real:</span>
                                         <span className={`text-lg font-bold ${getMarginColor()}`}>
                                             {realMarginPercent.toFixed(1)}%
                                         </span>
@@ -522,7 +507,7 @@ export default function RecipeForm({ recipeToEdit = null, onClose }) {
                     )}
 
                     {/* Botones de acción */}
-                    <div className="flex justify-end gap-3 pt-4 border-t border-gray-700">
+                    <div className="flex justify-end gap-3 pt-4 border-t border-white/20 shadow-lg">
                         <button
                             type="button"
                             onClick={onClose}
@@ -532,7 +517,7 @@ export default function RecipeForm({ recipeToEdit = null, onClose }) {
                         </button>
                         <button
                             type="submit"
-                            className="px-6 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors font-medium"
+                            className="px-6 py-2.5 btn-glass-primary hover:bg-primary-700 text-white rounded-lg transition-colors font-medium"
                         >
                             {recipeToEdit ? 'Actualizar Receta' : 'Guardar Receta'}
                         </button>
@@ -542,3 +527,4 @@ export default function RecipeForm({ recipeToEdit = null, onClose }) {
         </div>
     );
 }
+

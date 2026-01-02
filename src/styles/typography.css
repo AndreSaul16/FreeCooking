@@ -1,0 +1,62 @@
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/space-grotesk/700.css';
+
+/* Hero Title - Extra Large Display */
+.hero-title {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-size: clamp(4rem, 12vw, 14rem);
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    font-weight: 700;
+    /* Bold - peso máximo disponible */
+}
+
+/* Section Title - Large Display */
+.section-title {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+}
+
+/* Subsection Title */
+.subsection-title {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+}
+
+/* Body Text Premium */
+.body-premium {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+/* Small Premium Text */
+.text-premium-sm {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: clamp(0.875rem, 1.2vw, 1rem);
+    line-height: 1.5;
+    font-weight: 400;
+}
+
+/* Smooth Anti-aliasing */
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

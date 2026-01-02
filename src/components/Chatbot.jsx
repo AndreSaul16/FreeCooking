@@ -130,16 +130,17 @@ const Chatbot = () => {
             {/* Botón flotante */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="fixed bottom-6 right-6 p-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg transition-all z-50 flex items-center justify-center"
+                className="fixed bottom-6 right-6 p-4 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white rounded-full shadow-xl hover:shadow-2xl transition-all z-50 flex items-center justify-center"
+                style={{ boxShadow: '0 4px 20px rgba(16, 185, 129, 0.4)' }}
             >
                 {isOpen ? <X size={24} /> : <MessageCircle size={24} />}
             </button>
 
             {/* Ventana de chat */}
             {isOpen && (
-                <div className="fixed bottom-24 right-6 w-96 h-[500px] bg-gray-900 border border-gray-700 rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden">
+                <div className="fixed bottom-24 right-6 w-96 h-[500px] bg-black/30 backdrop-blur-sm border border-white/10 rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden">
                     {/* Header */}
-                    <div className="p-4 bg-gray-800 border-b border-gray-700 flex items-center gap-2">
+                    <div className="p-4 bg-white/5 backdrop-blur-lg border-b border-white/10 flex items-center gap-2">
                         <Bot className="text-emerald-500" size={20} />
                         <h3 className="font-semibold text-white">Asistente FreeCooking</h3>
                     </div>
@@ -158,7 +159,7 @@ const Chatbot = () => {
                                 <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                                     <div className={`max-w-[80%] p-3 rounded-lg ${msg.role === 'user'
                                         ? 'bg-emerald-600 text-white rounded-br-none'
-                                        : 'bg-gray-800 text-gray-200 rounded-bl-none'
+                                        : 'bg-white/5 backdrop-blur-lg text-white/90 rounded-bl-none'
                                         }`}>
                                         {msg.content || (msg.tool_calls ? <span className="italic text-sm opacity-75">Procesando solicitud...</span> : '')}
                                     </div>
@@ -167,9 +168,9 @@ const Chatbot = () => {
                         ))}
                         {isLoading && (
                             <div className="flex justify-start">
-                                <div className="bg-gray-800 p-3 rounded-lg rounded-bl-none flex items-center gap-2">
+                                <div className="bg-white/5 backdrop-blur-lg p-3 rounded-lg rounded-bl-none flex items-center gap-2">
                                     <Loader2 className="animate-spin text-emerald-500" size={16} />
-                                    <span className="text-gray-400 text-sm">Pensando...</span>
+                                    <span className="text-white/60 text-sm">Pensando...</span>
                                 </div>
                             </div>
                         )}
@@ -177,7 +178,7 @@ const Chatbot = () => {
                     </div>
 
                     {/* Input */}
-                    <div className="p-4 bg-gray-800 border-t border-gray-700">
+                    <div className="p-4 bg-white/5 backdrop-blur-lg border-t border-white/10">
                         <div className="flex gap-2">
                             <input
                                 type="text"
@@ -185,7 +186,7 @@ const Chatbot = () => {
                                 onChange={(e) => setInput(e.target.value)}
                                 onKeyPress={(e) => e.key === 'Enter' && handleSend()}
                                 placeholder="Escribe tu mensaje..."
-                                className="flex-1 bg-gray-900 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-emerald-500"
+                                className="flex-1 bg-black/30 backdrop-blur-sm border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-emerald-400"
                                 disabled={isLoading}
                             />
                             <button

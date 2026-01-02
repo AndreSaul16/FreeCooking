@@ -13,7 +13,7 @@ import { auth } from '../services/firebase';
 import { Capacitor } from '@capacitor/core';
 import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
 import { NativeBiometric } from 'capacitor-native-biometric';
-import * as webAuthnClient from '../services/webAuthnClient';
+
 import Logger from '../utils/Logger';
 
 const AuthContext = createContext();
@@ -117,63 +117,7 @@ export function AuthProvider({ children }) {
         }
     }
 
-    // ============================================
-    // SISTEMA NUEVO - WebAuthn (Passkeys)
-    // ============================================
 
-    /**
-     * Verifica si WebAuthn está disponible en el dispositivo
-     */
-    async function checkWebAuthn() {
-        try {
-            const availability = await webAuthnClient.checkWebAuthnAvailability();
-            return availability.isAvailable && availability.hasPlatformAuthenticator;
-        } catch (error) {
-            Logger.warn("WebAuthn not available:", error);
-            return false;
-        }
-    }
-
-    /**
-     * Registra un passkey para el usuario actual (requiere estar autenticado)
-     */
-    async function registerPasskey() {
-        try {
-            if (!currentUser) {
-                throw new Error("Debes iniciar sesión primero para registrar un passkey");
-            }
-
-            Logger.info("📱 Registrando passkey para usuario:", currentUser.email);
-            const result = await webAuthnClient.registerPasskey();
-            Logger.info("✅ Passkey registrado exitosamente");
-            return result;
-        } catch (error) {
-            Logger.error("❌ Error registrando passkey:", error);
-            throw error;
-        }
-    }
-
-    /**
-     * Inicia sesión usando passkey (WebAuthn)
-     */
-    async function loginWithPasskey(email) {
-        try {
-            Logger.info("🔐 Iniciando login con passkey para:", email);
-
-            // Obtener custom token del backend
-            const customToken = await webAuthnClient.loginWithPasskey(email);
-
-            // Autenticar en Firebase con el custom token
-            Logger.info("🔥 Autenticando en Firebase con custom token...");
-            const userCredential = await signInWithCustomToken(auth, customToken);
-
-            Logger.info("✅ Login con passkey exitoso");
-            return userCredential;
-        } catch (error) {
-            Logger.error("❌ Error en login con passkey:", error);
-            throw error;
-        }
-    }
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -190,14 +134,10 @@ export function AuthProvider({ children }) {
         login,
         logout,
         googleLogin,
-        // Sistema antiguo (deprecated)
+        // Sistema antiguo (deprecated, solo para Capacitor)
         checkBiometrics,
         loginWithBiometrics,
         registerBiometrics,
-        // Sistema nuevo (WebAuthn)
-        checkWebAuthn,
-        registerPasskey,
-        loginWithPasskey,
     };
 
     return (

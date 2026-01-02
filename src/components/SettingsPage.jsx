@@ -68,11 +68,11 @@ export default function SettingsPage() {
                         <SettingsIcon className="h-7 w-7 text-primary-500" />
                         Configuración del Negocio
                     </h2>
-                    <p className="text-gray-400 mt-1">Personaliza los cálculos financieros y la apariencia</p>
+                    <p className="text-white/60 mt-1">Personaliza los cálculos financieros y la apariencia</p>
                 </div>
                 <button
                     onClick={handleReset}
-                    className="flex items-center gap-2 px-4 py-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 text-white/60 hover:text-white hover:bg-white/10 backdrop-blur-xl rounded-lg transition-colors"
                 >
                     <RotateCcw className="h-4 w-4" />
                     Restablecer
@@ -83,7 +83,7 @@ export default function SettingsPage() {
             <UserProfile />
 
             {/* Sección Finanzas */}
-            <div className="bg-gray-800 border border-gray-700 rounded-xl p-6">
+            <div className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg rounded-xl p-6">
                 <div className="flex items-center gap-2 mb-4">
                     <DollarSign className="h-5 w-5 text-primary-500" />
                     <h3 className="text-lg font-semibold text-white">Configuración Financiera</h3>
@@ -92,7 +92,7 @@ export default function SettingsPage() {
                 <div className="grid md:grid-cols-2 gap-6">
                     {/* Margen de Beneficio */}
                     <div className="space-y-2">
-                        <label className="block text-sm font-medium text-gray-300">
+                        <label className="block text-sm font-medium text-white/80">
                             Margen de Beneficio Objetivo (%)
                         </label>
                         <input
@@ -113,7 +113,7 @@ export default function SettingsPage() {
 
                     {/* IVA */}
                     <div className="space-y-2">
-                        <label className="block text-sm font-medium text-gray-300">
+                        <label className="block text-sm font-medium text-white/80">
                             IVA / Impuestos (%)
                         </label>
                         <input
@@ -139,7 +139,7 @@ export default function SettingsPage() {
                                 className="w-5 h-5 text-primary-600 bg-gray-700 border-gray-600 rounded focus:ring-2 focus:ring-primary-500"
                             />
                             <div>
-                                <span className="text-sm font-medium text-gray-300">¿Los precios de carta incluyen impuestos?</span>
+                                <span className="text-sm font-medium text-white/80">¿Los precios de carta incluyen impuestos?</span>
                                 <p className="text-xs text-gray-500">
                                     Si está activado, el precio sugerido YA incluirá el IVA
                                 </p>
@@ -150,7 +150,7 @@ export default function SettingsPage() {
             </div>
 
             {/* Sección Mano de Obra */}
-            <div className="bg-gray-800 border border-gray-700 rounded-xl p-6">
+            <div className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg rounded-xl p-6">
                 <div className="flex items-center gap-2 mb-4">
                     <Users className="h-5 w-5 text-primary-500" />
                     <h3 className="text-lg font-semibold text-white">Costes de Mano de Obra</h3>
@@ -159,7 +159,7 @@ export default function SettingsPage() {
                 <div className="grid md:grid-cols-2 gap-6">
                     {/* Coste Hora */}
                     <div className="space-y-2">
-                        <label className="block text-sm font-medium text-gray-300">
+                        <label className="block text-sm font-medium text-white/80">
                             Coste por Hora Promedio (€)
                         </label>
                         <input
@@ -176,7 +176,7 @@ export default function SettingsPage() {
 
                     {/* Seguridad Social */}
                     <div className="space-y-2">
-                        <label className="block text-sm font-medium text-gray-300">
+                        <label className="block text-sm font-medium text-white/80">
                             % Seguridad Social / Coste Empresa
                         </label>
                         <input
@@ -193,9 +193,9 @@ export default function SettingsPage() {
                     </div>
 
                     {/* Display Coste Real */}
-                    <div className="md:col-span-2 bg-gray-900/50 border border-gray-700 rounded-lg p-4">
+                    <div className="md:col-span-2 bg-gray-900/50 border border-white/20 shadow-lg rounded-lg p-4">
                         <div className="flex items-center justify-between">
-                            <span className="text-sm text-gray-400">Coste Real por Hora (con cargas):</span>
+                            <span className="text-sm text-white/60">Coste Real por Hora (con cargas):</span>
                             <span className="text-lg font-bold text-primary-400">{getRealLaborCost().toFixed(2)}€/h</span>
                         </div>
                         <p className="text-xs text-gray-500 mt-1">
@@ -206,7 +206,7 @@ export default function SettingsPage() {
             </div>
 
             {/* Sección Apariencia */}
-            <div className="bg-gray-800 border border-gray-700 rounded-xl p-6">
+            <div className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg rounded-xl p-6">
                 <div className="flex items-center gap-2 mb-4">
                     <Palette className="h-5 w-5 text-primary-500" />
                     <h3 className="text-lg font-semibold text-white">Apariencia</h3>
@@ -215,13 +215,13 @@ export default function SettingsPage() {
                 <div className="space-y-6">
                     {/* Dark/Light Mode Toggle */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-300 mb-3">Modo de Color</label>
+                        <label className="block text-sm font-medium text-white/80 mb-3">Modo de Color</label>
                         <div className="flex items-center gap-4">
                             <button
                                 onClick={() => handleChange('darkMode', false)}
                                 className={`flex items-center gap-2 px-4 py-3 rounded-lg border-2 transition-all ${!settings.darkMode
                                     ? 'border-primary-500 bg-primary-500/10 text-primary-400'
-                                    : 'border-gray-600 text-gray-400 hover:border-gray-500'
+                                    : 'border-gray-600 text-white/60 hover:border-gray-500'
                                     }`}
                             >
                                 <Sun className="h-5 w-5" />
@@ -231,7 +231,7 @@ export default function SettingsPage() {
                                 onClick={() => handleChange('darkMode', true)}
                                 className={`flex items-center gap-2 px-4 py-3 rounded-lg border-2 transition-all ${settings.darkMode
                                     ? 'border-primary-500 bg-primary-500/10 text-primary-400'
-                                    : 'border-gray-600 text-gray-400 hover:border-gray-500'
+                                    : 'border-gray-600 text-white/60 hover:border-gray-500'
                                     }`}
                             >
                                 <Moon className="h-5 w-5" />
@@ -242,7 +242,7 @@ export default function SettingsPage() {
 
                     {/* Selector de Tema */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-300 mb-3">Tema de Color</label>
+                        <label className="block text-sm font-medium text-white/80 mb-3">Tema de Color</label>
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                             {Object.entries(THEMES).map(([key, theme]) => (
                                 <button
@@ -258,7 +258,7 @@ export default function SettingsPage() {
                                             className="w-8 h-8 rounded-full flex-shrink-0"
                                             style={{ backgroundColor: theme.colors[600] }}
                                         />
-                                        <span className={`font-medium ${settings.theme === key ? 'text-primary-400' : 'text-gray-300'}`}>
+                                        <span className={`font-medium ${settings.theme === key ? 'text-primary-400' : 'text-white/80'}`}>
                                             {theme.name}
                                         </span>
                                     </div>
@@ -291,7 +291,7 @@ export default function SettingsPage() {
 
             {/* System Logs (Admin Only) */}
             {isAdmin && (
-                <div className="bg-gray-800 border border-gray-700 rounded-xl p-6">
+                <div className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg rounded-xl p-6">
                     <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-2">
                             <FileText className="h-5 w-5 text-red-500" />
@@ -300,7 +300,7 @@ export default function SettingsPage() {
                         <div className="flex gap-2">
                             <button
                                 onClick={fetchLogs}
-                                className="p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg"
+                                className="p-2 text-white/60 hover:text-white hover:bg-gray-700 rounded-lg"
                                 title="Recargar Logs"
                             >
                                 <RefreshCw className={`h-4 w-4 ${loadingLogs ? 'animate-spin' : ''}`} />
@@ -317,7 +317,7 @@ export default function SettingsPage() {
                         </div>
                     </div>
 
-                    <div className="bg-gray-900 rounded-lg p-4 h-64 overflow-y-auto font-mono text-xs text-gray-300 space-y-2">
+                    <div className="bg-gray-900 rounded-lg p-4 h-64 overflow-y-auto font-mono text-xs text-white/80 space-y-2">
                         {logs.length === 0 ? (
                             <div className="text-center text-gray-500 py-10">
                                 {loadingLogs ? 'Cargando logs...' : 'No hay logs cargados. Pulsa recargar.'}
@@ -349,3 +349,4 @@ export default function SettingsPage() {
         </div>
     );
 }
+

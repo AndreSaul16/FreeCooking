@@ -48,7 +48,8 @@ export default function Dashboard() {
                 <h2 className="text-2xl font-bold text-white">Panel de Control</h2>
                 <button
                     onClick={() => setSalesModalOpen(true)}
-                    className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors shadow-lg shadow-green-600/20 font-bold"
+                    className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-bold rounded-xl transition-all shadow-xl hover:shadow-2xl"
+                    style={{ boxShadow: '0 4px 20px rgba(16, 185, 129, 0.4)' }}
                 >
                     <ShoppingCart className="h-5 w-5" />
                     Registrar Venta
@@ -57,72 +58,96 @@ export default function Dashboard() {
 
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.1 }}
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    className="bg-white/10 backdrop-blur-xl p-6 rounded-xl border border-white/20 shadow-lg hover:shadow-xl hover:border-white/30 transition-all"
+                >
                     <div className="flex items-center gap-4">
-                        <div className="p-3 bg-primary-900/50 rounded-lg">
+                        <div className="p-3 bg-primary-500/15 rounded-lg">
                             <Utensils className="h-6 w-6 text-primary-400" />
                         </div>
                         <div>
-                            <p className="text-sm text-gray-400">Total Recetas</p>
+                            <p className="text-sm text-white/60">Total Recetas</p>
                             <p className="text-2xl font-bold text-white">{stats.totalRecipes}</p>
                         </div>
                     </div>
-                </div>
+                </motion.div>
 
-                <div className="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.2 }}
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    className="bg-white/10 backdrop-blur-xl p-6 rounded-xl border border-white/20 shadow-lg hover:shadow-xl hover:border-white/30 transition-all"
+                >
                     <div className="flex items-center gap-4">
-                        <div className="p-3 bg-green-900/50 rounded-lg">
-                            <DollarSign className="h-6 w-6 text-green-400" />
+                        <div className="p-3 bg-emerald-500/15 rounded-lg">
+                            <DollarSign className="h-6 w-6 text-emerald-400" />
                         </div>
                         <div>
-                            <p className="text-sm text-gray-400">Beneficio Promedio</p>
+                            <p className="text-sm text-white/60">Beneficio Promedio</p>
                             <p className="text-2xl font-bold text-white">
                                 {stats.avgPrimeCost > 0 ? ((1 - (stats.avgPrimeCost / (stats.avgCost * 3))) * 100).toFixed(0) : 0}%
                             </p>
                         </div>
                     </div>
-                </div>
+                </motion.div>
 
-                <div className="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.3 }}
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    className="bg-white/10 backdrop-blur-xl p-6 rounded-xl border border-white/20 shadow-lg hover:shadow-xl hover:border-white/30 transition-all"
+                >
                     <div className="flex items-center gap-4">
-                        <div className="p-3 bg-blue-900/50 rounded-lg">
-                            <TrendingUp className="h-6 w-6 text-blue-400" />
+                        <div className="p-3 bg-sky-500/15 rounded-lg">
+                            <TrendingUp className="h-6 w-6 text-sky-400" />
                         </div>
                         <div>
-                            <p className="text-sm text-gray-400">Ingredientes</p>
+                            <p className="text-sm text-white/60">Ingredientes</p>
                             <p className="text-2xl font-bold text-white">{stats.totalIngredients}</p>
                         </div>
                     </div>
-                </div>
+                </motion.div>
 
-                <div className="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.4 }}
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    className="bg-white/10 backdrop-blur-xl p-6 rounded-xl border border-white/20 shadow-lg hover:shadow-xl hover:border-white/30 transition-all"
+                >
                     <div className="flex items-center gap-4">
-                        <div className="p-3 bg-red-900/50 rounded-lg">
+                        <div className="p-3 bg-red-500/15 rounded-lg">
                             <AlertCircle className="h-6 w-6 text-red-400" />
                         </div>
                         <div>
-                            <p className="text-sm text-gray-400">Alertas Stock</p>
+                            <p className="text-sm text-white/60">Alertas Stock</p>
                             <p className="text-2xl font-bold text-white">{lowStock.length}</p>
                         </div>
                     </div>
-                </div>
-            </div>
+                </motion.div>
+            </div >
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Low Stock Alerts */}
                 {lowStock.length > 0 && (
-                    <div className="bg-gray-800 p-6 rounded-xl border border-red-900/50 lg:col-span-2">
+                    <div className="bg-white/10 backdrop-blur-xl p-6 rounded-xl border border-red-500/30 shadow-lg lg:col-span-2">
                         <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                            <AlertCircle className="h-5 w-5 text-red-500" />
+                            <AlertCircle className="h-5 w-5 text-red-400" />
                             Alertas de Stock Bajo
                         </h3>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                             {lowStock.map(ing => (
-                                <div key={ing.id} className="bg-red-900/20 border border-red-900/50 p-3 rounded-lg flex justify-between items-center">
-                                    <span className="text-gray-200 font-medium">{ing.name}</span>
+                                <div key={ing.id} className="bg-red-500/10 border border-red-500/20 p-3 rounded-lg flex justify-between items-center">
+                                    <span className="text-white font-medium">{ing.name}</span>
                                     <div className="text-right">
                                         <p className="text-red-400 font-bold">{ing.currentStock} {ing.purchaseUnit}</p>
-                                        <p className="text-xs text-gray-500">Min: {ing.minStock}</p>
+                                        <p className="text-xs text-white/40">Min: {ing.minStock}</p>
                                     </div>
                                 </div>
                             ))}
@@ -131,48 +156,48 @@ export default function Dashboard() {
                 )}
 
                 {/* Top Ingredients */}
-                <div className="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                <div className="bg-white/10 backdrop-blur-xl p-6 rounded-xl border border-white/20 shadow-lg">
                     <h3 className="text-lg font-bold text-white mb-4">Ingredientes Más Usados</h3>
                     <div className="space-y-4">
                         {getTopIngredients().map(([name, count], index) => (
                             <div key={name} className="flex items-center justify-between">
                                 <div className="flex items-center gap-3">
-                                    <span className="text-gray-500 font-mono">#{index + 1}</span>
-                                    <span className="text-gray-300">{name}</span>
+                                    <span className="text-white/40 font-mono">#{index + 1}</span>
+                                    <span className="text-white">{name}</span>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <div className="w-24 h-2 bg-gray-700 rounded-full overflow-hidden">
+                                    <div className="w-24 h-2 bg-white/10 rounded-full overflow-hidden">
                                         <div
                                             className="h-full bg-primary-500 rounded-full"
                                             style={{ width: `${(count / recipes.length) * 100}%` }}
                                         />
                                     </div>
-                                    <span className="text-sm text-gray-400">{count} recetas</span>
+                                    <span className="text-sm text-white/60">{count} recetas</span>
                                 </div>
                             </div>
                         ))}
                         {recipes.length === 0 && (
-                            <p className="text-gray-500 text-center py-4">No hay datos suficientes</p>
+                            <p className="text-white/40 text-center py-4">No hay datos suficientes</p>
                         )}
                     </div>
                 </div>
 
                 {/* Profitability */}
-                <div className="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                <div className="bg-white/10 backdrop-blur-xl p-6 rounded-xl border border-white/20 shadow-lg">
                     <h3 className="text-lg font-bold text-white mb-4">Top Rentabilidad</h3>
                     <div className="space-y-4">
                         {getProfitability().map((item, index) => (
                             <div key={index} className="flex items-center justify-between">
-                                <span className="text-gray-300">{item.name}</span>
-                                <span className={`font-bold ${item.margin >= 70 ? 'text-green-400' :
-                                    item.margin >= 50 ? 'text-yellow-400' : 'text-red-400'
+                                <span className="text-white">{item.name}</span>
+                                <span className={`font-bold ${item.margin >= 70 ? 'text-emerald-400' :
+                                    item.margin >= 50 ? 'text-amber-400' : 'text-red-400'
                                     }`}>
                                     {Number(item.margin).toFixed(1)}%
                                 </span>
                             </div>
                         ))}
                         {recipes.length === 0 && (
-                            <p className="text-gray-500 text-center py-4">No hay datos suficientes</p>
+                            <p className="text-white/40 text-center py-4">No hay datos suficientes</p>
                         )}
                     </div>
                 </div>
@@ -198,6 +223,6 @@ export default function Dashboard() {
                     </motion.div>
                 )}
             </AnimatePresence>
-        </div>
+        </div >
     );
 }

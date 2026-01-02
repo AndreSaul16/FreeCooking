@@ -109,13 +109,13 @@ export default function MasterIngredientsManager() {
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div className="relative flex-1 w-full sm:max-w-md">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/60" />
                     <input
                         type="text"
                         placeholder="Buscar ingredientes..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full bg-gray-800 border border-gray-700 rounded-lg pl-10 pr-4 py-2 text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        className="w-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg rounded-lg pl-10 pr-4 py-2 text-white focus:ring-2 focus:ring-primary-400 focus:border-transparent"
                     />
                 </div>
                 <button
@@ -124,7 +124,7 @@ export default function MasterIngredientsManager() {
                         setNewIngredient({ name: '', purchasePrice: '', purchaseUnit: 'kg', wastePercentage: '0', minStock: '0', currentStock: '0' });
                         setIsAdding(true);
                     }}
-                    className="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors shadow-lg shadow-primary-600/20"
+                    className="flex items-center gap-2 px-4 py-2 btn-glass-primary hover:bg-primary-700 text-white rounded-lg transition-colors shadow-lg shadow-primary-600/20"
                 >
                     <Plus className="h-5 w-5" />
                     Nuevo Ingrediente
@@ -139,22 +139,22 @@ export default function MasterIngredientsManager() {
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
                         onSubmit={handleAdd}
-                        className="bg-gray-800 border border-gray-700 rounded-xl p-6 space-y-4 overflow-hidden"
+                        className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg rounded-xl p-6 space-y-4 overflow-hidden"
                     >
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                             <div className="lg:col-span-2">
-                                <label className="block text-sm font-medium text-gray-400 mb-1">Nombre</label>
+                                <label className="block text-sm font-medium text-white/60 mb-1">Nombre</label>
                                 <input
                                     type="text"
                                     required
                                     value={newIngredient.name}
                                     onChange={(e) => setNewIngredient({ ...newIngredient, name: e.target.value })}
-                                    className="w-full bg-gray-900 border border-gray-600 rounded-lg px-3 py-2 text-white focus:ring-2 focus:ring-primary-500"
+                                    className="w-full bg-black/20 border border-gray-600 rounded-lg px-3 py-2 text-white focus:ring-2 focus:ring-primary-400"
                                     placeholder="Ej: Tomate Triturado"
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-400 mb-1">Precio Compra (€)</label>
+                                <label className="block text-sm font-medium text-white/60 mb-1">Precio Compra (€)</label>
                                 <input
                                     type="number"
                                     step="0.01"
@@ -167,15 +167,15 @@ export default function MasterIngredientsManager() {
                                         }
                                         setNewIngredient({ ...newIngredient, purchasePrice: val });
                                     }}
-                                    className="w-full bg-gray-900 border border-gray-600 rounded-lg px-3 py-2 text-white focus:ring-2 focus:ring-primary-500"
+                                    className="w-full bg-black/20 border border-gray-600 rounded-lg px-3 py-2 text-white focus:ring-2 focus:ring-primary-400"
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-400 mb-1">Unidad</label>
+                                <label className="block text-sm font-medium text-white/60 mb-1">Unidad</label>
                                 <select
                                     value={newIngredient.purchaseUnit}
                                     onChange={(e) => setNewIngredient({ ...newIngredient, purchaseUnit: e.target.value })}
-                                    className="w-full bg-gray-900 border border-gray-600 rounded-lg px-3 py-2 text-white focus:ring-2 focus:ring-primary-500"
+                                    className="w-full bg-black/20 border border-gray-600 rounded-lg px-3 py-2 text-white focus:ring-2 focus:ring-primary-400"
                                 >
                                     <option value="kg">Kilogramo (kg)</option>
                                     <option value="l">Litro (l)</option>
@@ -183,7 +183,7 @@ export default function MasterIngredientsManager() {
                                 </select>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-400 mb-1">Merma (%)</label>
+                                <label className="block text-sm font-medium text-white/60 mb-1">Merma (%)</label>
                                 <input
                                     type="number"
                                     min="0"
@@ -196,11 +196,11 @@ export default function MasterIngredientsManager() {
                                         }
                                         setNewIngredient({ ...newIngredient, wastePercentage: val });
                                     }}
-                                    className="w-full bg-gray-900 border border-gray-600 rounded-lg px-3 py-2 text-white focus:ring-2 focus:ring-primary-500"
+                                    className="w-full bg-black/20 border border-gray-600 rounded-lg px-3 py-2 text-white focus:ring-2 focus:ring-primary-400"
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-400 mb-1">Stock Mínimo</label>
+                                <label className="block text-sm font-medium text-white/60 mb-1">Stock Mínimo</label>
                                 <input
                                     type="number"
                                     min="0"
@@ -212,11 +212,11 @@ export default function MasterIngredientsManager() {
                                         }
                                         setNewIngredient({ ...newIngredient, minStock: val });
                                     }}
-                                    className="w-full bg-gray-900 border border-gray-600 rounded-lg px-3 py-2 text-white focus:ring-2 focus:ring-primary-500"
+                                    className="w-full bg-black/20 border border-gray-600 rounded-lg px-3 py-2 text-white focus:ring-2 focus:ring-primary-400"
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-400 mb-1">Stock Actual</label>
+                                <label className="block text-sm font-medium text-white/60 mb-1">Stock Actual</label>
                                 <input
                                     type="number"
                                     min="0"
@@ -228,7 +228,7 @@ export default function MasterIngredientsManager() {
                                         }
                                         setNewIngredient({ ...newIngredient, currentStock: val });
                                     }}
-                                    className="w-full bg-gray-900 border border-gray-600 rounded-lg px-3 py-2 text-white focus:ring-2 focus:ring-primary-500"
+                                    className="w-full bg-black/20 border border-gray-600 rounded-lg px-3 py-2 text-white focus:ring-2 focus:ring-primary-400"
                                 />
                             </div>
                         </div>
@@ -240,13 +240,13 @@ export default function MasterIngredientsManager() {
                                     setEditingId(null);
                                     setNewIngredient({ name: '', purchasePrice: '', purchaseUnit: 'kg', wastePercentage: '0', minStock: '0', currentStock: '0' });
                                 }}
-                                className="px-4 py-2 text-gray-400 hover:text-white transition-colors"
+                                className="px-4 py-2 text-white/60 hover:text-white transition-colors"
                             >
                                 Cancelar
                             </button>
                             <button
                                 type="submit"
-                                className="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors flex items-center gap-2"
+                                className="px-4 py-2 btn-glass-primary hover:bg-primary-700 text-white rounded-lg transition-colors flex items-center gap-2"
                             >
                                 <Save className="h-4 w-4" />
                                 Guardar
@@ -257,30 +257,30 @@ export default function MasterIngredientsManager() {
             </AnimatePresence>
 
             {/* Ingredients Table */}
-            <div className="bg-gray-800 border border-gray-700 rounded-xl overflow-hidden shadow-xl">
+            <div className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg rounded-xl overflow-hidden shadow-xl">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
                         <thead>
-                            <tr className="bg-gray-900/50 border-b border-gray-700">
-                                <th className="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Ingrediente</th>
-                                <th className="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Precio / Unidad</th>
-                                <th className="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Merma</th>
-                                <th className="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Stock Actual</th>
-                                <th className="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider text-right">Acciones</th>
+                            <tr className="bg-black/20/50 border-b border-white/20 shadow-lg">
+                                <th className="px-6 py-4 text-xs font-semibold text-white/60 uppercase tracking-wider">Ingrediente</th>
+                                <th className="px-6 py-4 text-xs font-semibold text-white/60 uppercase tracking-wider">Precio / Unidad</th>
+                                <th className="px-6 py-4 text-xs font-semibold text-white/60 uppercase tracking-wider">Merma</th>
+                                <th className="px-6 py-4 text-xs font-semibold text-white/60 uppercase tracking-wider">Stock Actual</th>
+                                <th className="px-6 py-4 text-xs font-semibold text-white/60 uppercase tracking-wider text-right">Acciones</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-700">
                             {filteredIngredients.map((ing) => {
                                 const isLowStock = (ing.currentStock || 0) <= (ing.minStock || 0);
                                 return (
-                                    <tr key={ing.id} className="hover:bg-gray-700/30 transition-colors group">
+                                    <tr key={ing.id} className="hover:bg-white/5/30 transition-colors group">
                                         <td className="px-6 py-4">
                                             <div className="font-medium text-white">{ing.name}</div>
                                         </td>
-                                        <td className="px-6 py-4 text-gray-300">
+                                        <td className="px-6 py-4 text-white/80">
                                             {ing.purchasePrice}€ / {ing.purchaseUnit}
                                         </td>
-                                        <td className="px-6 py-4 text-gray-300">
+                                        <td className="px-6 py-4 text-white/80">
                                             {ing.wastePercentage}%
                                         </td>
                                         <td className="px-6 py-4">
@@ -309,14 +309,14 @@ export default function MasterIngredientsManager() {
                                                 </button>
                                                 <button
                                                     onClick={() => handleUpdate(ing.id)}
-                                                    className="p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-colors"
+                                                    className="p-2 text-white/60 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
                                                     title="Editar"
                                                 >
                                                     <Edit2 className="h-4 w-4" />
                                                 </button>
                                                 <button
                                                     onClick={() => handleDelete(ing.id)}
-                                                    className="p-2 text-gray-400 hover:text-red-400 hover:bg-red-900/20 rounded-lg transition-colors"
+                                                    className="p-2 text-white/60 hover:text-red-400 hover:bg-red-900/20 rounded-lg transition-colors"
                                                     title="Eliminar"
                                                 >
                                                     <Trash2 className="h-4 w-4" />
@@ -349,27 +349,27 @@ export default function MasterIngredientsManager() {
                             initial={{ scale: 0.95, opacity: 0, y: 20 }}
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.95, opacity: 0, y: 20 }}
-                            className="bg-gray-800 border border-gray-700 rounded-2xl p-6 w-full max-w-md shadow-2xl"
+                            className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg rounded-2xl p-6 w-full max-w-md shadow-2xl"
                         >
                             <div className="flex justify-between items-center mb-6">
                                 <h3 className="text-xl font-bold text-white">
                                     Gestionar Stock: <span className="text-primary-400">{selectedIngredient.name}</span>
                                 </h3>
-                                <button onClick={() => setStockModalOpen(false)} className="text-gray-400 hover:text-white">
+                                <button onClick={() => setStockModalOpen(false)} className="text-white/60 hover:text-white">
                                     <X className="h-6 w-6" />
                                 </button>
                             </div>
 
-                            <div className="mb-6 p-4 bg-gray-900/50 rounded-xl flex justify-between items-center">
+                            <div className="mb-6 p-4 bg-black/20/50 rounded-xl flex justify-between items-center">
                                 <div>
-                                    <p className="text-xs text-gray-400 uppercase">Stock Actual</p>
+                                    <p className="text-xs text-white/60 uppercase">Stock Actual</p>
                                     <p className="text-2xl font-mono font-bold text-white">
                                         {selectedIngredient.currentStock || 0} <span className="text-sm text-gray-500">{selectedIngredient.purchaseUnit}</span>
                                     </p>
                                 </div>
                                 <div>
-                                    <p className="text-xs text-gray-400 uppercase">Mínimo</p>
-                                    <p className="text-lg font-mono font-medium text-gray-300">
+                                    <p className="text-xs text-white/60 uppercase">Mínimo</p>
+                                    <p className="text-lg font-mono font-medium text-white/80">
                                         {selectedIngredient.minStock || 0} <span className="text-sm text-gray-500">{selectedIngredient.purchaseUnit}</span>
                                     </p>
                                 </div>
@@ -382,7 +382,7 @@ export default function MasterIngredientsManager() {
                                         onClick={() => setStockForm({ ...stockForm, type: 'IN' })}
                                         className={`p-3 rounded-xl border flex flex-col items-center gap-2 transition-all ${stockForm.type === 'IN'
                                             ? 'bg-green-900/20 border-green-500 text-green-400'
-                                            : 'bg-gray-900/50 border-gray-700 text-gray-400 hover:border-gray-500'
+                                            : 'bg-black/20/50 border-white/20 shadow-lg text-white/60 hover:border-gray-500'
                                             }`}
                                     >
                                         <ArrowDown className="h-6 w-6" />
@@ -393,7 +393,7 @@ export default function MasterIngredientsManager() {
                                         onClick={() => setStockForm({ ...stockForm, type: 'OUT' })}
                                         className={`p-3 rounded-xl border flex flex-col items-center gap-2 transition-all ${stockForm.type === 'OUT'
                                             ? 'bg-red-900/20 border-red-500 text-red-400'
-                                            : 'bg-gray-900/50 border-gray-700 text-gray-400 hover:border-gray-500'
+                                            : 'bg-black/20/50 border-white/20 shadow-lg text-white/60 hover:border-gray-500'
                                             }`}
                                     >
                                         <ArrowUp className="h-6 w-6" />
@@ -401,7 +401,7 @@ export default function MasterIngredientsManager() {
                                     </button>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-400 mb-1">
+                                    <label className="block text-sm font-medium text-white/60 mb-1">
                                         Cantidad ({selectedIngredient.purchaseUnit})
                                     </label>
                                     <input
@@ -417,25 +417,25 @@ export default function MasterIngredientsManager() {
                                             }
                                             setStockForm({ ...stockForm, quantity: val });
                                         }}
-                                        className="w-full bg-gray-900 border border-gray-600 rounded-lg px-3 py-3 text-white focus:ring-2 focus:ring-primary-500 text-lg font-mono"
+                                        className="w-full bg-black/20 border border-gray-600 rounded-lg px-3 py-3 text-white focus:ring-2 focus:ring-primary-400 text-lg font-mono"
                                         placeholder="0.00"
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-400 mb-1">Motivo (Opcional)</label>
+                                    <label className="block text-sm font-medium text-white/60 mb-1">Motivo (Opcional)</label>
                                     <input
                                         type="text"
                                         value={stockForm.reason}
                                         onChange={(e) => setStockForm({ ...stockForm, reason: e.target.value })}
-                                        className="w-full bg-gray-900 border border-gray-600 rounded-lg px-3 py-2 text-white focus:ring-2 focus:ring-primary-500"
+                                        className="w-full bg-black/20 border border-gray-600 rounded-lg px-3 py-2 text-white focus:ring-2 focus:ring-primary-400"
                                         placeholder={stockForm.type === 'IN' ? "Ej: Compra Makro" : "Ej: Caducado"}
                                     />
                                 </div>
 
                                 <button
                                     type="submit"
-                                    className="w-full py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-xl transition-colors shadow-lg shadow-primary-600/20 mt-4"
+                                    className="w-full py-3 btn-glass-primary hover:bg-primary-700 text-white font-medium rounded-xl transition-colors shadow-lg shadow-primary-600/20 mt-4"
                                 >
                                     Confirmar Movimiento
                                 </button>
@@ -447,3 +447,4 @@ export default function MasterIngredientsManager() {
         </div>
     );
 }
+

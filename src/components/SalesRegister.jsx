@@ -37,14 +37,14 @@ export default function SalesRegister({ onClose }) {
     };
 
     return (
-        <div className="bg-gray-800 border border-gray-700 rounded-2xl p-6 w-full max-w-md shadow-2xl">
+        <div className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg rounded-2xl p-6 w-full max-w-md shadow-2xl">
             <div className="flex justify-between items-center mb-6">
                 <h3 className="text-xl font-bold text-white flex items-center gap-2">
                     <ShoppingCart className="h-6 w-6 text-primary-500" />
                     Registrar Venta
                 </h3>
                 {onClose && (
-                    <button onClick={onClose} className="text-gray-400 hover:text-white">
+                    <button onClick={onClose} className="text-white/60 hover:text-white">
                         <span className="sr-only">Cerrar</span>
                         <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -64,16 +64,16 @@ export default function SalesRegister({ onClose }) {
                             <CheckCircle className="h-8 w-8 text-green-500" />
                         </div>
                         <h4 className="text-xl font-bold text-white mb-2">¡Venta Registrada!</h4>
-                        <p className="text-gray-400">El stock se ha actualizado correctamente.</p>
+                        <p className="text-white/60">El stock se ha actualizado correctamente.</p>
                     </motion.div>
                 ) : (
                     <form onSubmit={handleSale} className="space-y-6">
                         <div>
-                            <label className="block text-sm font-medium text-gray-400 mb-2">Seleccionar Receta</label>
+                            <label className="block text-sm font-medium text-white/60 mb-2">Seleccionar Receta</label>
                             <select
                                 value={selectedRecipeId}
                                 onChange={(e) => setSelectedRecipeId(e.target.value)}
-                                className="w-full bg-gray-900 border border-gray-600 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent appearance-none"
+                                className="w-full bg-black/20 border border-gray-600 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-primary-400 focus:border-transparent appearance-none"
                                 required
                             >
                                 <option value="">-- Elige un plato --</option>
@@ -92,7 +92,7 @@ export default function SalesRegister({ onClose }) {
                                 className="space-y-4"
                             >
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-400 mb-2">Cantidad Vendida</label>
+                                    <label className="block text-sm font-medium text-white/60 mb-2">Cantidad Vendida</label>
                                     <div className="flex items-center gap-4">
                                         <button
                                             type="button"
@@ -101,7 +101,7 @@ export default function SalesRegister({ onClose }) {
                                         >
                                             <Minus className="h-5 w-5" />
                                         </button>
-                                        <div className="flex-1 bg-gray-900 border border-gray-600 rounded-xl px-4 py-3 text-center text-2xl font-mono font-bold text-white">
+                                        <div className="flex-1 bg-black/20 border border-gray-600 rounded-xl px-4 py-3 text-center text-2xl font-mono font-bold text-white">
                                             {quantity}
                                         </div>
                                         <button
@@ -114,8 +114,8 @@ export default function SalesRegister({ onClose }) {
                                     </div>
                                 </div>
 
-                                <div className="bg-gray-900/50 rounded-xl p-4 text-sm">
-                                    <p className="text-gray-400 mb-2">Resumen de ingredientes a descontar:</p>
+                                <div className="bg-black/20/50 rounded-xl p-4 text-sm">
+                                    <p className="text-white/60 mb-2">Resumen de ingredientes a descontar:</p>
                                     <ul className="space-y-1 max-h-32 overflow-y-auto">
                                         {selectedRecipe.ingredients.map((ing, idx) => (
                                             <li key={idx} className="flex justify-between text-gray-300">
@@ -140,7 +140,7 @@ export default function SalesRegister({ onClose }) {
                         <button
                             type="submit"
                             disabled={!selectedRecipe || loading}
-                            className="w-full py-4 bg-primary-600 hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-lg rounded-xl transition-all shadow-lg shadow-primary-600/20 flex items-center justify-center gap-2"
+                            className="w-full py-4 btn-glass-primary hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-lg rounded-xl transition-all shadow-lg shadow-primary-600/20 flex items-center justify-center gap-2"
                         >
                             {loading ? (
                                 <div className="h-6 w-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -157,3 +157,4 @@ export default function SalesRegister({ onClose }) {
         </div>
     );
 }
+
