@@ -83,7 +83,7 @@ export default function UserProfile({ onClose }) {
 
             {/* Avatar/Photo Section */}
             <div className="flex items-center gap-6 mb-6 pb-6 border-b border-white/20 shadow-lg">
-                <div className="relative z-0">
+                <div className="relative">
                     {formData.photoURL ? (
                         <img
                             src={formData.photoURL}
@@ -97,10 +97,10 @@ export default function UserProfile({ onClose }) {
                     )}
                     <button
                         type="button"
-                        className="absolute bottom-0 right-0 p-1.5 bg-white/10 backdrop-blur-sm hover:bg-white/20 rounded-full border-2 border-white/20 transition-all"
+                        className="absolute -bottom-1 -right-1 p-1 bg-primary-600 hover:bg-primary-700 rounded-full border-2 border-gray-900 transition-all shadow-md"
                         title="Cambiar foto"
                     >
-                        <Camera className="h-4 w-4 text-white" />
+                        <Camera className="h-3 w-3 text-white" />
                     </button>
                 </div>
                 <div>
@@ -199,7 +199,7 @@ export default function UserProfile({ onClose }) {
                 <button
                     type="submit"
                     disabled={loading}
-                    className="w-full flex items-center justify-center gap-2 px-4 py-3 btn-glass-primary hover:bg-primary-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors shadow-lg shadow-primary-600/20"
+                    className="btn-glass-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     {loading ? (
                         <>

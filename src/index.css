@@ -127,6 +127,7 @@ textarea {
 .glass-input {
   @apply bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/40;
 }
+
 /* ===========================
    BUTTON GLASS UTILITIES
    =========================== */
